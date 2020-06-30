@@ -1,16 +1,23 @@
-const webpack = require("webpack")
+const webpack = require("webpack");
 // const autoprefixer = require('autoprefixer');
 
+const { appPath } = require("./constants");
+
 module.exports = {
-  // entry: {
-  //   app: 'src/index.js',
-  // },
+  entry: {
+    app: appPath,
+  },
   module: {
     rules: [
       {
         test: /\.jsx?$/, // Transform all .js and .jsx file
         exclude: /node_modules/,
-        use: "babel-loader",
+        use: {
+          loader: "babel-loader",
+          options: {
+            plugins: ["react-hot-loader/babel"],
+          },
+        },
       },
       {
         test: /\.html$/,
@@ -98,4 +105,12 @@ module.exports = {
     //   }
     // })
   ],
-}
+  resolve: {
+    modules: ["node_modules"],
+    extensions: [".js", ".jsx", ".react.js"],
+    alias: {
+      "react-dom": "@hot-loader/react-dom",
+      "@": appPath,
+    },
+  },
+};
