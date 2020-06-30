@@ -1,12 +1,17 @@
-const webpack = require("webpack")
-const merge = require("webpack-merge")
-const HtmlWebpackPlugin = require("html-webpack-plugin")
+const webpack = require("webpack");
+const merge = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
-const base = require("./webpack.base")
+const base = require("./webpack.base");
+const { appPath } = require("./constants");
 
 module.exports = merge(base, {
   mode: "development",
-
+  entry: [
+    "react-hot-loader/patch",
+    // 'webpack-hot-middleware/client?reload=true',
+    appPath, // Start with js/app.js
+  ],
   // output: {
   //   filename: '[name].js',
   //   chunkFilename: '[name].chunk.js',
@@ -34,9 +39,9 @@ module.exports = merge(base, {
 
   // Emit a source map for easier debugging
   // See https://webpack.js.org/configuration/devtool/#devtool
-  // devtool: 'eval-source-map',
+  devtool: "eval-source-map",
 
   // performance: {
   //   hints: false,
   // },
-})
+});
